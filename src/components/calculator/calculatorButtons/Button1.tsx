@@ -1,6 +1,7 @@
 "use client"
 
 import React, { SetStateAction } from 'react'
+import { evaluate } from 'mathjs'
 
 type Props = {
     children: React.ReactNode,
@@ -8,10 +9,44 @@ type Props = {
     setDisplay?: React.Dispatch<SetStateAction<string>>,
     displayRef?: any,
     degrad? : string,
-    setDegrad? : React.Dispatch<SetStateAction<string>>
+    setDegrad? : React.Dispatch<SetStateAction<string>>,
+    calculateResult? : (inputFormula : string) => string
 }
 
-export default function Button1({children, fontSize = "2xl", setDisplay, displayRef, degrad, setDegrad}: Props) {
+export default function Button1({children, fontSize = "2xl", setDisplay, displayRef, degrad, setDegrad, calculateResult}: Props) {
+
+    // function calculateResult(inputFormula : string) : string{
+    //   const formula = inputFormula.replace(/\s/g, '')
+    //   let sanitizedFormula = ""
+    //   for(let i = 0; i < formula.length; i++){
+    //     if(
+    //         (formula[i] == 's' && formula[i+1] == 'i' && formula[i+2] == 'n') ||
+    //         (formula[i] == 'c' && formula[i+1] == 'o' && formula[i+2] == 's') ||
+    //         (formula[i] == 't' && formula[i+1] == 'a' && formula[i+2] == 'n')
+    //       ){
+          
+    //       let j = i+4
+    //       let triVal = ''
+    //       while(!isNaN(parseInt(formula[j]))){
+    //         triVal += formula[j]
+    //         j++
+    //       }
+
+    //       if(degrad == "Rad"){
+    //         const piVal = formula[j] == 'π' ? Math.PI : 1
+    //         triVal = (parseInt(triVal) * piVal * 180 / Math.PI).toLocaleString()
+    //       }
+
+    //       sanitizedFormula += formula[i] + formula[i+1] + formula[i+2] + '(' + triVal + 'deg' + ')'
+
+    //       i = sanitizedFormula.length - 1
+    //     }else{
+    //       sanitizedFormula += formula[i]
+    //     }
+    //   }
+    //   console.log(sanitizedFormula)
+    //   return evaluate(sanitizedFormula).toLocaleString()
+    // }
 
     function buttonHandler(){
       const val = children?.toLocaleString()
@@ -40,7 +75,23 @@ export default function Button1({children, fontSize = "2xl", setDisplay, display
           case "tan":
           case "log":
             val && setDisplayAndCaret(val + '()', true)
-            break          
+            break
+
+          case "=":
+            calculateResult &&
+            setDisplay(lastDisplay => {
+              try {
+                return calculateResult(lastDisplay)
+              } catch (error) {
+                return "error"
+              }
+            })   
+            displayRef.focus()
+            setTimeout(() => {
+              displayRef.setSelectionRange(-1, -1)
+            }, 0)
+            break     
+
           default:
             val && setDisplayAndCaret(val, false)
             break            
