@@ -7,39 +7,26 @@ type Props = {}
 
 export default function BasicCalculator({}: Props) {
   const [display, setDisplay] = useState("")
+  const [degrad, setDegrad] = useState("Deg")
+  const [rerender, setRerender] = useState("")
+
   const displayRef = useRef<HTMLInputElement>(null)
 
-  function inputHandler(input : React.ChangeEvent<HTMLInputElement>){
-    setDisplay(input.target.value)
-  }
-
-  function focusInput(){
+ useEffect(() => {
     displayRef.current?.focus()
-  }
-
-  // function changeCaretPos(inParenthesis : boolean){
-  //   displayRef.current?.focus();
-  //   if(inParenthesis){
-  //     setTimeout(() => {
-  //       if (displayRef.current !== null && displayRef.current.selectionStart !== null) {
-  //         const caretPos = displayRef.current.selectionStart - 1
-  //         displayRef.current.setSelectionRange(caretPos, caretPos);
-  //         }
-  //     }, 0);
-  //   }
-  // }
-  
+    setRerender(r => r+"rerender")
+ }, [])
 
   return (
     <div className='h-66 rounded-sm shadow-md bg-blue-200 px-3 py-3 calcuWidth1' >
         <section className='block w-full h-12 bg-blue-400 mb-3 flex justify-end items-center px-3'>
-            <input className='text-xl text-right bg-blue-400 outline-none w-full' value={display} onChange={(e) => inputHandler(e)} ref={displayRef} />
+            <input className='text-xl text-right bg-blue-400 outline-none w-full' id="calc-display" value={display} onChange={(e) => setDisplay(e.target.value)} ref={displayRef} />
         </section>
 
         <div className='flex w-full justify-between mb-2'>
-          <Button1 fontSize={"xl"} displayRef={displayRef.current}>Deg</Button1>
-          <Button1 fontSize={"xl"} displayRef={displayRef.current}>Rad</Button1>
-          <Button1 setDisplay={setDisplay} focusInput={focusInput} displayRef={displayRef.current}>7</Button1>
+          <Button1 fontSize={"xl"} displayRef={displayRef.current} degrad={degrad} setDegrad={setDegrad}>Deg</Button1>
+          <Button1 fontSize={"xl"} displayRef={displayRef.current} degrad={degrad} setDegrad={setDegrad}>Rad</Button1>
+          <Button1 setDisplay={setDisplay} displayRef={displayRef.current}>7</Button1>
           <Button1 setDisplay={setDisplay} displayRef={displayRef.current}>8</Button1>
           <Button1 setDisplay={setDisplay} displayRef={displayRef.current}>9</Button1>
           <Button1 fontSize={"xl"} setDisplay={setDisplay} displayRef={displayRef.current}>DEL</Button1>

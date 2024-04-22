@@ -6,15 +6,21 @@ type Props = {
     children: React.ReactNode,
     fontSize?: string,
     setDisplay?: React.Dispatch<SetStateAction<string>>,
-    focusInput?: () => void,
-    displayRef?: any
+    displayRef?: any,
+    degrad? : string,
+    setDegrad? : React.Dispatch<SetStateAction<string>>
 }
 
-export default function Button1({children, fontSize = "2xl", setDisplay, focusInput, displayRef}: Props) {
+export default function Button1({children, fontSize = "2xl", setDisplay, displayRef, degrad, setDegrad}: Props) {
 
     function buttonHandler(){
       const val = children?.toLocaleString()
       const caretPos = displayRef.selectionStart
+
+      if(val == 'Deg' || val == 'Rad'){
+        setDegrad && setDegrad(lastDegrad => val)
+      }
+
       if(setDisplay){
         switch(val){
           case "AC":
@@ -58,8 +64,15 @@ export default function Button1({children, fontSize = "2xl", setDisplay, focusIn
 
     }
 
+  let bgColor;
+  if((children == 'Deg' && degrad == 'Deg') || (children == 'Rad' && degrad == 'Rad')){
+    bgColor = 'bg-blue-400'
+  }else{
+    bgColor = 'bg-blue-300'
+  }
+
   return (
-    <button onClick={buttonHandler} className={`bg-blue-300 w-12 h-10 flex justify-center items-center text-${fontSize} border border-blue-400 cursor-pointer hover:bg-blue-400`}>
+    <button onClick={buttonHandler} className={`${bgColor} w-12 h-10 flex justify-center items-center text-${fontSize} border border-blue-400 cursor-pointer hover:bg-blue-400`}>
         {children}
     </button>
   )
