@@ -37,27 +37,38 @@ export default function BasicCalculator({}: Props) {
         (formula[i] == 'c' && formula[i+1] == 'o' && formula[i+2] == 's') ||
         (formula[i] == 't' && formula[i+1] == 'a' && formula[i+2] == 'n')
       ){
-      
-      let j = i+4
-      let triVal = ''
-      while(!isNaN(parseInt(formula[j]))){
-        triVal += formula[j]
-        j++
-      }
+        let j = i+4
+        let triVal = ''
+        while(!isNaN(parseInt(formula[j]))){
+          triVal += formula[j]
+          j++
+        }
 
-      if(degrad == "Rad"){
-        const piVal = formula[j] == 'π' ? Math.PI : 1
-        triVal = (parseInt(triVal) * piVal * 180 / Math.PI).toLocaleString()
-      }
+        if(degrad == "Rad"){
+          const piVal = formula[j] == 'π' ? Math.PI : 1
+          triVal = (parseInt(triVal) * piVal * 180 / Math.PI).toLocaleString()
+          triVal = triVal.split(',').join('')
+          console.log(triVal)
+        }
 
-      sanitizedFormula += formula[i] + formula[i+1] + formula[i+2] + '(' + triVal + 'deg' + ')'
+        sanitizedFormula += formula[i] + formula[i+1] + formula[i+2] + '(' + triVal + 'deg' + ')'
 
-      i = sanitizedFormula.length - 1
+        i = sanitizedFormula.length - 1
     }else{
       sanitizedFormula += formula[i]
     }
   }
-  return evaluate(sanitizedFormula).toLocaleString()
+
+  let result = ''
+  try {
+    result =  evaluate(sanitizedFormula).toLocaleString()
+  } catch (error) {
+    console.log(error)
+    result = "ERROR"
+  }
+
+  return result
+
 }
 
   return (
