@@ -16,6 +16,18 @@
   }
 } */
 
+@layer components {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    @apply appearance-none m-0;
+  }
+
+  input[type="number"] {
+    @apply appearance-none;
+    -moz-appearance: textfield; /* Firefox */
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
