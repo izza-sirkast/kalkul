@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { GoArrowSwitch } from "react-icons/go";
-import { lengthConverter } from './libs/UnitConverterLib';
+import { lengthConverter, massConverter } from './libs/UnitConverterLib';
 
 type Props = {}
 
@@ -22,10 +22,11 @@ export default function UnitConverter({}: Props) {
 
 
     // All possible variable value for pq, unit1, unit2
-    const pqVals = ["Length", "Mass", "Speed", "Temperature"]
+    const pqVals = ["Length", "Mass", "Time", "Speed", "Temperature"]
     const unitVals = {
         Length : ["Milimeter", "Centimeter", "Decimeter", "Meter", "Decameter", "Hectometer", "Kilometer"],
-        Mass : ["Gram", "Kilogram", "Miligram"]
+        Mass : ["Microgram","Miligram", "Centigram", "Decigram","Gram", "Decagram", "Hectogram", "Kilogram", "Metric Ton", "Stone", "Pound", "Ounce"],
+        Time : ["Nanosecond", "Microsecond", "Milisecond", "Second", "Minute", "Hour", "Day", "Week", "Month", "Year", "Decade"]
     }
     
     let curUnitVals : string[] = [""];
@@ -35,6 +36,9 @@ export default function UnitConverter({}: Props) {
             break
         case "Mass":
             curUnitVals = unitVals.Mass
+            break
+        case "Time":
+            curUnitVals = unitVals.Time
             break
     }
 
@@ -47,12 +51,22 @@ export default function UnitConverter({}: Props) {
                 case "Length":
                     output = lengthConverter(inputVal, unit1, unit2)
                     setInput2(output as number)
+                    break;
+                case "Mass":
+                    output = massConverter(inputVal, unit1, unit2)
+                    setInput2(output as number)
+                    break;
             }
         }else{
             switch(pQ){
                 case "Length":
                     output = lengthConverter(inputVal, unit2, unit1)
                     setInput1(output as number)
+                    break;
+                case "Mass":
+                    output = massConverter(inputVal, unit2, unit1)
+                    setInput1(output as number)
+                    break;
             }
         }
     }
@@ -120,7 +134,7 @@ export default function UnitConverter({}: Props) {
             <GoArrowSwitch className='text-2xl' />
 
             <div>
-                <input type="number" className='w-36 rounded-md border border-black px-2 focus:outline-none' value={input2} onChange={(e) => setInput2(parseInt(e.target.value))}  />
+                <input type="number" className='w-36 rounded-md border border-black px-2 focus:outline-none' value={input2} onChange={(e) => convertUnit(parseInt(e.target.value), "2")}  />
 
                 <button className='px-3 py-1 w-36 rounded-md border border-black flex justify-between items-center' onClick={() => setOpenUnit2Select(prev => !prev)}>
                         <p>{unit2}</p>
