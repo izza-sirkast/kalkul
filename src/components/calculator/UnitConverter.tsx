@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { GoArrowSwitch } from "react-icons/go";
-import { getFactor, getFactorLength, lengthConverter, massConverter } from './libs/UnitConverterLib';
+import { getFactor, getFactorLength, lengthConverter, massConverter, timeConverter, unitConvert } from './libs/UnitConverterLib';
 
 type Props = {}
 
@@ -46,7 +46,7 @@ export default function UnitConverter({}: Props) {
     function convertUnit(inputValStr : string, inputFrom : string){
         
         const lastChar = inputValStr.at(-1)
-        if(!/^\d$/.test(lastChar || 'a')){
+        if(!/^\d$/.test(lastChar || '.')){
             if(lastChar == "."){
                 inputFrom == "1"
                     ? setInput1(inputValStr)
@@ -59,46 +59,27 @@ export default function UnitConverter({}: Props) {
         }
 
         let inputVal : number = parseFloat(inputValStr)
-        if(isNaN(inputVal)){
-            inputVal = 0
-        }
 
         let output;
         if(inputFrom == "1"){
             setInput1(inputVal.toString())
-            switch(pQ){
-                case "Length":
-                    output = lengthConverter(inputVal, unit1, unit2)
-                    setInput2(output.toString())
-                    break;
-                case "Mass":
-                    output = massConverter(inputVal, unit1, unit2)
-                    setInput2(output.toString())
-                    break;
-                }
+            output = unitConvert(pQ, inputVal, unit1, unit2)
+            setInput2(output.toString())
         }else{
             setInput2(inputVal.toString())
-            switch(pQ){
-                case "Length":
-                    output = lengthConverter(inputVal, unit2, unit1)
-                    setInput1(output.toString())
-                    break;
-                case "Mass":
-                    output = massConverter(inputVal, unit2, unit1)
-                    setInput1(output.toString())
-                    break;
-            }
+            output = unitConvert(pQ, inputVal, unit2, unit1)
+            setInput1(output.toString())
         }
     }
 
     useEffect(() => {
         // Refresh Calculation
-        convertUnit(input1, "1")
+        convertUnit(input2, "2")
     }, [unit1])
     
     useEffect(() => {
         // Refresh Calculation
-        convertUnit(input2, "2")
+        convertUnit(input1, "1")
     }, [unit2])
 
     useEffect(() => {
@@ -110,7 +91,7 @@ export default function UnitConverter({}: Props) {
 
     
   return (
-    <div className='min-h-40 bg-blue-300 w-10/12 mt-5 p-5 rounded-md'>
+    <div className='min-h-40 bg-blue-300 w-10/12 max-w-lg mt-5 p-5 rounded-md'>
         <div>
             <button className='px-3 py-1 w-36 rounded-md border border-black flex justify-between items-center bg-blue-200' onClick={() => setOpenPQSelect(prev => !prev)}>
                 <p>{pQ}</p>

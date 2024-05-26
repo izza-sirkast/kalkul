@@ -1,3 +1,9 @@
+export const unitConvert = (pQ : string, inputVal : number, unitInput : string, unitOutput : string) : number => {
+    let factor = getFactor(pQ, unitInput, unitOutput)
+    let conversionResult = inputVal * factor
+    return conversionResult
+}
+
 export const getFactor = (pQ : string, unitInput : string, unitOutput : string) => {
     let factor;
     switch(pQ){
@@ -6,6 +12,9 @@ export const getFactor = (pQ : string, unitInput : string, unitOutput : string) 
             break
         case("Mass"):
             factor = getFactorMass(unitInput, unitOutput)
+            break
+        case("Time"):
+            factor = getFactorTime(unitInput, unitOutput)
             break
         default:
             factor = 1
@@ -702,13 +711,514 @@ export const getFactorMass = (unitInput : string, unitOutput : String) => {
     return factor
 }
 
+export const getFactorTime = (unitInput : string, unitOutput : string) : number => {
+    let factor = 0;
+
+    switch(unitInput){
+        
+        case "Nanosecond":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 1
+                    break;
+                case "Microsecond":
+                    factor = 1e-3
+                    break;
+                case "Milisecond":
+                    factor = 1e-6
+                    break;
+                case "Second":
+                    factor = 1e-9
+                    break;
+                case "Minute":
+                    factor = 1.6667e-11
+                    break;
+                case "Hour":
+                    factor = 2.7778e-13
+                    break;
+                case "Day":
+                    factor = 1.1547e-14
+                    break;
+                case "Week":
+                    factor = 1.6534e-15
+                    break;
+                case "Month":
+                    factor = 3.8052e-16
+                    break;
+                case "Year":
+                    factor = 3.1689e-17
+                    break;
+                case "Decade":
+                    factor = 3.1689e-18
+                    break;
+                case "Century":
+                    factor = 3.1689e-19
+                    break;
+            }
+            break;
+
+        case "Microsecond":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 1e3
+                    break;
+                case "Microsecond":
+                    factor = 1
+                    break;
+                case "Milisecond":
+                    factor = 1e-3
+                    break;
+                case "Second":
+                    factor = 1e-6
+                    break;
+                case "Minute":
+                    factor = 1.6667e-8
+                    break;
+                case "Hour":
+                    factor = 2.7778e-10
+                    break;
+                case "Day":
+                    factor = 1.1547e-11
+                    break;
+                case "Week":
+                    factor = 1.6534e-12
+                    break;
+                case "Month":
+                    factor = 3.8052e-13
+                    break;
+                case "Year":
+                    factor = 3.1689e-14
+                    break;
+                case "Decade":
+                    factor = 3.1689e-15
+                    break;
+                case "Century":
+                    factor = 3.1689e-16
+                    break;
+            }
+            break;
+
+        case "Milisecond":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 1e6
+                    break;
+                case "Microsecond":
+                    factor = 1e3
+                    break;
+                case "Milisecond":
+                    factor = 1
+                    break;
+                case "Second":
+                    factor = 1e-3
+                    break;
+                case "Minute":
+                    factor = 1.6667e-5
+                    break;
+                case "Hour":
+                    factor = 2.7778e-7
+                    break;
+                case "Day":
+                    factor = 1.1547e-8
+                    break;
+                case "Week":
+                    factor = 1.6534e-9
+                    break;
+                case "Month":
+                    factor = 3.8052e-10
+                    break;
+                case "Year":
+                    factor = 3.1689e-11
+                    break;
+                case "Decade":
+                    factor = 3.1689e-12
+                    break;
+                case "Century":
+                    factor = 3.1689e-13
+                    break;
+            }
+            break;
+
+        case "Second":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 1e9
+                    break;
+                case "Microsecond":
+                    factor = 1e6
+                    break;
+                case "Milisecond":
+                    factor = 1e3
+                    break;
+                case "Second":
+                    factor = 1
+                    break;
+                case "Minute":
+                    factor = 1.6667e-2
+                    break;
+                case "Hour":
+                    factor = 2.7778e-4
+                    break;
+                case "Day":
+                    factor = 1.1547e-5
+                    break;
+                case "Week":
+                    factor = 1.6534e-6
+                    break;
+                case "Month":
+                    factor = 3.8052e-7
+                    break;
+                case "Year":
+                    factor = 3.1689e-8
+                    break;
+                case "Decade":
+                    factor = 3.1689e-9
+                    break;
+                case "Century":
+                    factor = 3.1689e-10
+                    break;
+            }
+            break;
+
+        case "Minute":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 6e10
+                    break;
+                case "Microsecond":
+                    factor = 6e7
+                    break;
+                case "Milisecond":
+                    factor = 6e4
+                    break;
+                case "Second":
+                    factor = 60
+                    break;
+                case "Minute":
+                    factor = 1
+                    break;
+                case "Hour":
+                    factor = 1.6667e-2
+                    break;
+                case "Day":
+                    factor = 6.9444e-4
+                    break;
+                case "Week":
+                    factor = 9.9206e-5
+                    break;
+                case "Month":
+                    factor = 2.2831e-5
+                    break;
+                case "Year":
+                    factor = 1.9013e-6
+                    break;
+                case "Decade":
+                    factor = 1.9013e-7
+                    break;
+                case "Century":
+                    factor = 1.9013e-8
+                    break;
+            }
+            break;
+
+        case "Hour":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 3.6e12
+                    break;
+                case "Microsecond":
+                    factor = 3.6e9
+                    break;
+                case "Milisecond":
+                    factor = 3.6e6
+                    break;
+                case "Second":
+                    factor = 3.6e3
+                    break;
+                case "Minute":
+                    factor = 60
+                    break;
+                case "Hour":
+                    factor = 1
+                    break;
+                case "Day":
+                    factor = 3.1667e-2
+                    break;
+                case "Week":
+                    factor = 5.9524e-3
+                    break;
+                case "Month":
+                    factor = 1.3699e-3
+                    break;
+                case "Year":
+                    factor = 1.1416e-4
+                    break;
+                case "Decade":
+                    factor = 1.1416e-5
+                    break;
+                case "Century":
+                    factor = 1.1416e-6
+                    break;
+            }
+            break;
+
+        case "Day":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 8.64e13
+                    break;
+                case "Microsecond":
+                    factor = 8.64e10
+                    break;
+                case "Milisecond":
+                    factor = 8.64e7
+                    break;
+                case "Second":
+                    factor = 8.64e4
+                    break;
+                case "Minute":
+                    factor = 1440
+                    break;
+                case "Hour":
+                    factor = 24
+                    break;
+                case "Day":
+                    factor = 1
+                    break;
+                case "Week":
+                    factor = 1.4286e-1
+                    break;
+                case "Month":
+                    factor = 3.2877e-2
+                    break;
+                case "Year":
+                    factor = 2.7379e-3
+                    break;
+                case "Decade":
+                    factor = 2.7379e-4
+                    break;
+                case "Century":
+                    factor = 2.7379e-5
+                    break;
+            }
+            break;
+
+        case "Week":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 6.048e14
+                    break;
+                case "Microsecond":
+                    factor = 6.048e11
+                    break;
+                case "Milisecond":
+                    factor = 6.048e8
+                    break;
+                case "Second":
+                    factor = 6.048e5
+                    break;
+                case "Minute":
+                    factor = 10080
+                    break;
+                case "Hour":
+                    factor = 168
+                    break;
+                case "Day":
+                    factor = 7
+                    break;
+                case "Week":
+                    factor = 1
+                    break;
+                case "Month":
+                    factor = 2.3026e-1
+                    break;
+                case "Year":
+                    factor = 1.9178e-2
+                    break;
+                case "Decade":
+                    factor = 1.9178e-3
+                    break;
+                case "Century":
+                    factor = 1.9178e-4
+                    break;
+            }
+            break;
+
+        case "Month":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 2.63e15
+                    break;
+                case "Microsecond":
+                    factor = 2.63e12
+                    break;
+                case "Milisecond":
+                    factor = 2.63e9
+                    break;
+                case "Second":
+                    factor = 2.63e6
+                    break;
+                case "Minute":
+                    factor = 4.38e4
+                    break;
+                case "Hour":
+                    factor = 730
+                    break;
+                case "Day":
+                    factor = 30.42
+                    break;
+                case "Week":
+                    factor = 4.345
+                    break;
+                case "Month":
+                    factor = 1
+                    break;
+                case "Year":
+                    factor = 8.2201e-2
+                    break;
+                case "Decade":
+                    factor = 8.2201e-3
+                    break;
+                case "Century":
+                    factor = 8.2201e-4
+                    break;
+            }
+            break;
+
+        case "Year":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 3.1557e16
+                    break;
+                case "Microsecond":
+                    factor = 3.1557e13
+                    break;
+                case "Milisecond":
+                    factor = 3.1557e10
+                    break;
+                case "Second":
+                    factor = 3.1557e7
+                    break;
+                case "Minute":
+                    factor = 5.2595e5
+                    break;
+                case "Hour":
+                    factor = 8766
+                    break;
+                case "Day":
+                    factor = 365.25
+                    break;
+                case "Week":
+                    factor = 52.18
+                    break;
+                case "Month":
+                    factor = 12
+                    break;
+                case "Year":
+                    factor = 1
+                    break;
+                case "Decade":
+                    factor = 1e-1
+                    break;
+                case "Century":
+                    factor = 1e-2
+                    break;
+            }
+            break;
+
+        case "Decade":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 3.1557e17
+                    break;
+                case "Microsecond":
+                    factor = 3.1557e14
+                    break;
+                case "Milisecond":
+                    factor = 3.1557e11
+                    break;
+                case "Second":
+                    factor = 3.1557e8
+                    break;
+                case "Minute":
+                    factor = 5.2595e6
+                    break;
+                case "Hour":
+                    factor = 87660
+                    break;
+                case "Day":
+                    factor = 3652.5
+                    break;
+                case "Week":
+                    factor = 521.8
+                    break;
+                case "Month":
+                    factor = 120
+                    break;
+                case "Year":
+                    factor = 10
+                    break;
+                case "Decade":
+                    factor = 1
+                    break;
+                case "Century":
+                    factor = 1e-1
+                    break;
+            }
+            break;
+
+        case "Century":
+            switch(unitOutput){
+                case "Nanosecond":
+                    factor = 3.1557e18
+                    break;
+                case "Microsecond":
+                    factor = 3.1557e15
+                    break;
+                case "Milisecond":
+                    factor = 3.1557e12
+                    break;
+                case "Second":
+                    factor = 3.1557e9
+                    break;
+                case "Minute":
+                    factor = 5.2595e7
+                    break;
+                case "Hour":
+                    factor = 876600
+                    break;
+                case "Day":
+                    factor = 36525
+                    break;
+                case "Week":
+                    factor = 5218
+                    break;
+                case "Month":
+                    factor = 1200
+                    break;
+                case "Year":
+                    factor = 100
+                    break;
+                case "Decade":
+                    factor = 10
+                    break;
+                case "Century":
+                    factor = 1
+                    break;
+            }
+            break;
+    }
+
+    return factor
+}
+
 export const lengthConverter = (valInput : number, unitInput : string, unitOutput : string) => {
     let factor = getFactorLength(unitInput, unitOutput)
     let valOutput = valInput * factor;
     return valOutput
 }
 
-export const massConverter = (valInput : number, unitInput : string, unitOutput : String) => {
+export const massConverter = (valInput : number, unitInput : string, unitOutput : string) => {
     let factor = getFactorMass(unitInput, unitOutput)
     let valOutput = valInput * factor
     return valOutput
@@ -1207,4 +1717,8 @@ export const massConverter = (valInput : number, unitInput : string, unitOutput 
     // }
 
     // return valOutput
+}
+
+export const timeConverter = (valInput : number, unitInput : string, unitOutput : string) : number => {
+    return valInput * getFactorTime(unitInput, unitOutput)
 }
