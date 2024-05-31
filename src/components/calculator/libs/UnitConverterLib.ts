@@ -1,10 +1,25 @@
 export const unitConvert = (pQ : string, inputVal : number, unitInput : string, unitOutput : string) : number => {
-    let factor = getFactor(pQ, unitInput, unitOutput)
-    let conversionResult = inputVal * factor
-    return conversionResult
+    // Exception for temperature
+    switch(pQ){
+        case "Temperature":
+            return temperatureConverter(inputVal, unitInput, unitOutput)
+        default:
+            let factor = getFactorDefault(pQ, unitInput, unitOutput)
+            let conversionResult = inputVal * factor
+            return conversionResult
+    }
 }
 
-export const getFactor = (pQ : string, unitInput : string, unitOutput : string) => {
+export const getFactor = (pQ : string, unitInput : string, unitOutput : string) : string => {
+    switch(pQ){
+        case "Temperature":
+            return getFormulaTemperature(unitInput, unitOutput)
+        default:
+            return getFactorDefault(pQ, unitInput, unitOutput).toLocaleString()
+    }
+}
+
+export const getFactorDefault = (pQ : string, unitInput : string, unitOutput : string) => {
     let factor;
     switch(pQ){
         case("Length"):
@@ -15,6 +30,9 @@ export const getFactor = (pQ : string, unitInput : string, unitOutput : string) 
             break
         case("Time"):
             factor = getFactorTime(unitInput, unitOutput)
+            break
+        case("Speed"):
+            factor = getFactorSpeed(unitInput, unitOutput)
             break
         default:
             factor = 1
@@ -711,6 +729,154 @@ export const getFactorMass = (unitInput : string, unitOutput : String) => {
     return factor
 }
 
+export const getFactorSpeed = (unitInput : string, unitOutput : String) : number => {
+    let factor : number = 0;
+
+    switch(unitInput){
+        
+        case "Meters per second (m/s)":
+            switch(unitOutput){
+                case "Meters per second (m/s)":
+                    factor = 1
+                    break;
+                case "Kilometers per hour (km/h)":
+                    factor = 3.6
+                    break;
+                case "Miles per hour (mph)":
+                    factor = 2.23694
+                    break;
+                case "Feet per second (ft/s)":
+                    factor = 3.28084
+                    break;
+                case "Knots (kn)":
+                    factor = 1.94384
+                    break;
+                case "Lightspeed (c)":
+                    factor = 3.33564e-9
+                    break;
+            }
+            break;
+
+        case "Kilometers per hour (km/h)":
+            switch(unitOutput){
+                case "Meters per second (m/s)":
+                    factor = 0.27778
+                    break;
+                case "Kilometers per hour (km/h)":
+                    factor = 1
+                    break;
+                case "Miles per hour (mph)":
+                    factor = 0.621371
+                    break;
+                case "Feet per second (ft/s)":
+                    factor = 0.911344
+                    break;
+                case "Knots (kn)":
+                    factor = 0.539957
+                    break;
+                case "Lightspeed (c)":
+                    factor = 9.26567e-10
+                    break;
+            }
+            break;
+
+        case "Miles per hour (mph)":
+            switch(unitOutput){
+                case "Meters per second (m/s)":
+                    factor = 0.44704
+                    break;
+                case "Kilometers per hour (km/h)":
+                    factor = 1.60934
+                    break;
+                case "Miles per hour (mph)":
+                    factor = 1
+                    break;
+                case "Feet per second (ft/s)":
+                    factor = 1.46667
+                    break;
+                case "Knots (kn)":
+                    factor = 0.868976
+                    break;
+                case "Lightspeed (c)":
+                    factor = 1.49116e-9
+                    break;
+            }
+            break;
+
+        case "Feet per second (ft/s)":
+            switch(unitOutput){
+                case "Meters per second (m/s)":
+                    factor = 0.3048
+                    break;
+                case "Kilometers per hour (km/h)":
+                    factor = 1.09728
+                    break;
+                case "Miles per hour (mph)":
+                    factor = 0.681818
+                    break;
+                case "Feet per second (ft/s)":
+                    factor = 1
+                    break;
+                case "Knots (kn)":
+                    factor = 0.592484
+                    break;
+                case "Lightspeed (c)":
+                    factor = 1.0167e-9
+                    break;
+            }
+            break;
+
+        case "Knots (kn)":
+            switch(unitOutput){
+                case "Meters per second (m/s)":
+                    factor = 0.514444
+                    break;
+                case "Kilometers per hour (km/h)":
+                    factor = 1.852
+                    break;
+                case "Miles per hour (mph)":
+                    factor = 1.15078
+                    break;
+                case "Feet per second (ft/s)":
+                    factor = 1.68781
+                    break;
+                case "Knots (kn)":
+                    factor = 1
+                    break;
+                case "Lightspeed (c)":
+                    factor = 1.71543e-9
+                    break;
+            }
+            break;
+
+        case "Lightspeed (c)":
+            switch(unitOutput){
+                case "Meters per second (m/s)":
+                    factor = 2.99792e8
+                    break;
+                case "Kilometers per hour (km/h)":
+                    factor = 1.07925e9
+                    break;
+                case "Miles per hour (mph)":
+                    factor = 6.706e8
+                    break;
+                case "Feet per second (ft/s)":
+                    factor = 9.835e8
+                    break;
+                case "Knots (kn)":
+                    factor = 5.829e8
+                    break;
+                case "Lightspeed (c)":
+                    factor = 1
+                    break;
+            }
+            break;
+    }
+
+
+    return factor
+}
+
 export const getFactorTime = (unitInput : string, unitOutput : string) : number => {
     let factor = 0;
 
@@ -1210,6 +1376,54 @@ export const getFactorTime = (unitInput : string, unitOutput : string) : number 
     }
 
     return factor
+}
+
+export const getFormulaTemperature = (unitInput : string, unitOutput : string) : string => {
+    let formula = ""
+    switch(unitInput){
+        case "Celcius":
+            switch(unitOutput){
+                case "Celcius":
+                    formula = "T°C = T°C"
+                    break;
+                case "Farenheit":
+                    formula = "T°F = T°C x 1.8 + 32"
+                    break;
+                case "Kelvin":
+                    formula = "T°K = T°C + 273.15"
+                    break; 
+            }
+            break;
+
+        case "Farenheit":
+            switch(unitOutput){
+                case "Celcius":
+                    formula = "T°C = (T°C - 32) / 1.8"
+                    break;
+                case "Farenheit":
+                    formula = "T°F = T°F"
+                    break;
+                case "Kelvin":
+                    formula = "T°K = (T°F + 459.67) / 1.8"
+                    break; 
+            }
+            break;
+
+        case "Kelvin":
+            switch(unitOutput){
+                case "Celcius":
+                    formula = "T°C = T°K - 273.15"
+                    break;
+                case "Farenheit":
+                    formula = "T°F = T°K x 1.8 - 459.67"
+                    break;
+                case "Kelvin":
+                    formula = "T°K = T°K"
+                    break; 
+            }
+            break;
+    }
+    return formula
 }
 
 export const lengthConverter = (valInput : number, unitInput : string, unitOutput : string) => {
@@ -1721,4 +1935,56 @@ export const massConverter = (valInput : number, unitInput : string, unitOutput 
 
 export const timeConverter = (valInput : number, unitInput : string, unitOutput : string) : number => {
     return valInput * getFactorTime(unitInput, unitOutput)
+}
+
+export const speedConverter = (valInput : number, unitInput : string, unitOutput : string) : number => {
+    return valInput * getFactorSpeed(unitInput, unitOutput)
+}
+
+export const temperatureConverter = (valInput : number, unitInput : string, unitOutput : string) : number => {
+    let result : number = 0;
+    switch(unitInput){
+        case "Celcius":
+            switch(unitOutput){
+                case "Celcius":
+                    result = valInput
+                    break
+                case "Farenheit":
+                    result = valInput * 1.8 + 32
+                    break
+                case "Kelvin":
+                    result = valInput + 273.15
+                    break
+            }
+            break
+
+        case "Farenheit":
+            switch(unitOutput){
+                case "Celcius":
+                    result = (valInput - 32) / 1.8
+                    break
+                case "Farenheit":
+                    result = valInput
+                    break
+                case "Kelvin":
+                    result = (valInput + 459.67) / 1.8
+                    break
+            }
+            break
+        
+        case "Kelvin":
+            switch(unitOutput){
+                case "Celcius":
+                    result = valInput - 273.15
+                    break
+                case "Farenheit":
+                    result = valInput * 1.8 - 459.67
+                    break
+                case "Kelvin":
+                    result = valInput
+                    break
+            }
+        
+    }
+    return result
 }

@@ -27,20 +27,28 @@ export default function UnitConverter({}: Props) {
     const unitVals = {
         Length : ["Milimeter", "Centimeter", "Decimeter", "Meter", "Decameter", "Hectometer", "Kilometer"],
         Mass : ["Microgram","Miligram", "Centigram", "Decigram","Gram", "Decagram", "Hectogram", "Kilogram", "Metric Ton", "Stone", "Pound", "Ounce"],
-        Time : ["Nanosecond", "Microsecond", "Milisecond", "Second", "Minute", "Hour", "Day", "Week", "Month", "Year", "Decade", "Century"]
+        Time : ["Nanosecond", "Microsecond", "Milisecond", "Second", "Minute", "Hour", "Day", "Week", "Month", "Year", "Decade", "Century"],
+        Speed : ["Meters per second (m/s)", "Kilometers per hour (km/h)", "Miles per hour (mph)", "Feet per second (ft/s)", "Knots (kn)", "Lightspeed (c)"],
+        Temperature : ["Celcius", "Farenheit","Kelvin"]
     }
     
     let curUnitVals : string[] = [""];
     switch(pQ){
         case "Length":
             curUnitVals = unitVals.Length
-            break
+            break;
         case "Mass":
             curUnitVals = unitVals.Mass
-            break
+            break;
         case "Time":
             curUnitVals = unitVals.Time
-            break
+            break;
+        case "Speed":
+            curUnitVals = unitVals.Speed
+            break;
+        case "Temperature":
+            curUnitVals = unitVals.Temperature
+            break;
     }
 
     function convertUnit(inputValStr : string, inputFrom : string){
@@ -74,7 +82,7 @@ export default function UnitConverter({}: Props) {
 
     useEffect(() => {
         // Refresh Calculation
-        convertUnit(input2, "2")
+        convertUnit(input1, "1")
     }, [unit1])
     
     useEffect(() => {
@@ -157,9 +165,13 @@ export default function UnitConverter({}: Props) {
 
         </div>
 
-        <p className='mt-7 bg-blue-200 px-2 rounded-md border border-black'>
-            Formula : 1 {unit1} = {factor} {unit2}
-        </p>
+        <div className='mt-7 bg-blue-200 px-2 rounded-md border border-black'>
+            {pQ == "Temperature" 
+                ? <div>Formula : {factor}</div>
+                : <div>Formula : 1 {unit1} = {factor} {unit2}</div>
+            }
+            
+        </div>
 
     </div>
   )
