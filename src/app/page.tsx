@@ -1,4 +1,5 @@
 import BasicCalculator from "@/components/calculator/BasicCalculator";
+import Link from "next/link";
 
 export default function Home() {
   return (
