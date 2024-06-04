@@ -54,11 +54,21 @@ export default function UnitConverter({}: Props) {
     function convertUnit(inputValStr : string, inputFrom : string){
         
         const lastChar = inputValStr.at(-1)
+        console.log(lastChar)
         if(!/^\d$/.test(lastChar || '.')){
             if(lastChar == "."){
                 inputFrom == "1"
                     ? setInput1(inputValStr)
                     : setInput2(inputValStr)
+            }else if(lastChar == "-" || lastChar == "−"){
+                if(inputValStr == "0-" || inputValStr == "0−"){
+                    setInput1("-")
+                    setInput2("-")
+                }else{
+                    inputFrom == "1"
+                    ? setInput1(inputValStr)
+                    : setInput2(inputValStr)
+                }
             }else if(lastChar == undefined){
                 setInput1("0")
                 setInput2("0")
